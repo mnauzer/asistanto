@@ -2,7 +2,7 @@
   "name": "vuexy-vuejs-admin-template",
   "version": "9.3.0",
   "private": true,
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -133,3 +133,5 @@
     "workerDirectory": "public"
   }
 }
+
+

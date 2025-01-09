@@ -18,6 +18,44 @@ import { cleanupSVG, importDirectory, isEmptyColor, parseColors, runSVGO } from 
 import type { IconifyJSON } from '@iconify/types'
 import { getIcons, getIconsCSS, stringToIcon } from '@iconify/utils'
 
+/// Sheldon & Mnauzer
+import { createRequire } from 'module'; // Importovanie createRequire
+import { fileURLToPath } from 'url'; // Na získanie __dirname
+import { dirname, join } from 'path'; // Práca s cestami
+
+const require = createRequire(import.meta.url); // Vytvorenie dynamického require
+
+async function loadIcons() {
+    try {
+        // Dynamické načítanie CommonJS modulu
+        const tablerIcons = require('@iconify-json/tabler/icons.json');
+        console.log('Tabler Icons Loaded:', tablerIcons);
+
+        // Spracovanie ikon
+        processIcons(tablerIcons);
+    } catch (error) {
+        console.error('Chyba pri načítaní ikon:', error);
+    }
+}
+
+// Pomocné funkcie
+function processIcons(icons: any) {
+    console.log('Počet ikon:', Object.keys(icons).length);
+
+    // Príklad generovania CSS súboru
+    const __filename = fileURLToPath(import.meta.url); // Aktuálny súbor
+    const __dirname = dirname(__filename); // Adresár aktuálneho súboru
+    const target = join(__dirname, 'icons.css'); // Cesta k výstupnému súboru
+
+    console.log('CSS file will be generated at:', target);
+    // Tu môže byť kód na uloženie výstupu do target
+}
+
+// Spustenie načítania ikon
+loadIcons();
+
+/// Sheldon & Mnauzer
+
 /**
  * Script configuration
  */
