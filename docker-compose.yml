@@ -1,0 +1,53 @@
+services:
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    ports:
+      - "5173:80"  # Mapovanie lokálneho portu na port Nginx vo vnútri kontajnera
+    volumes:
+      - ./frontend:/app  # Zabezpečenie živého reloadu pri zmene súborov
+      - /app/node_modules  # Ignorácia node_modules pre výkon
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+
+  # Backend (Laravel)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # Mapovanie lokálneho portu na Laravel aplikáciu
+    volumes:
+      - ./backend:/var/www/html  # Synchronizácia súborov medzi hostiteľom a kontajnerom
+      - /var/www/html/vendor  # Ignorácia Laravel vendor priečinka
+      - /var/www/html/storage  # Ignorácia storage priečinka
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_DATABASE=asistanto
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=secret
+    depends_on:
+      - database
+
+  # Databáza (PostgreSQL)
+  database:
+    image: postgres:14
+    container_name: asistanto_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: asistanto
+
+volumes:
+  postgres_data: {}

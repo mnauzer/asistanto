@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "cislo": "RL20.001",
+    "datum": "2020-03-29",
+    "customer_id": 7,
+    "alias": null,
+    "nazov": "Montáž zavlažovacieho systému",
+    "popis": "Montáž zavlažovacieho systému RainBird do novej záhrady",
+    "type_id": 1,
+    "status_id": 3,
+    "miesto": "Sučany",
+    "vzdialenost": 74,
+    "uctovanie_typ": "cenová ponuka",
+    "uctovanie_dopravy": "paušál",
+    "offer_id": null,
+    "sadzba_dph": null,
+    "suma_zaklad": 2545,
+    "suma_dph": 509,
+    "suma_celkom": 3054,
+    "zacatie": "2020-04-01",
+    "ukoncenie": null,
+    "poznamka": null,
+    "short": null
+  }
+]

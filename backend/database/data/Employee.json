@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "alias": "Maťo",
+    "meno": "Matej",
+    "priezvisko": "Strmeň",
+    "titul": "Ing",
+    "zaradenie": "vedúcko",
+    "aktivny": true,
+    "user_id": 1
+  },
+  {
+    "id": 2,
+    "alias": "Rasťo",
+    "meno": "Rastislav",
+    "priezvisko": "Škubal",
+    "zaradenie": "vedúcko",
+    "aktivny": true,
+    "poznamka": "poznámka",
+    "user_id": 1
+  },
+  {
+    "id": 3,
+    "alias": "Peter",
+    "meno": "Peter",
+    "priezvisko": "Babičenko",
+    "zaradenie": "brigádnik",
+    "aktivny": true,
+    "user_id": 1
+  },
+  {
+    "id": 4,
+    "alias": "Granko",
+    "meno": "Peter",
+    "priezvisko": "Chabada",
+    "zaradenie": "brigádnik",
+    "aktivny": true,
+    "user_id": 1
+  },
+  {
+    "id": 5,
+    "alias": "Kubo",
+    "meno": "Jakub",
+    "priezvisko": "Škubal",
+    "zaradenie": "brigádnik",
+    "aktivny": true,
+    "user_id": 1
+  },
+  {
+    "id": 6,
+    "alias": "Panika",
+    "meno": "Jozef",
+    "priezvisko": "Spodniak",
+    "zaradenie": "brigádnik",
+    "aktivny": false,
+    "user_id": 1
+  },
+  {
+    "id": 7,
+    "alias": "Matúš",
+    "meno": "Matúš",
+    "priezvisko": "Fašang",
+    "zaradenie": "brigádnik",
+    "aktivny": true,
+    "user_id": 1
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "nazov": "čakajúca",
+    "popis": "čakajúca na schválenie zákazníkom",
+    "icon": null,
+    "color": "pink",
+    "created_at": "2020-02-23T17:04:36.000000Z",
+    "updated_at": "2020-03-27T11:20:55.000000Z"
+  },
+  {
+    "id": 2,
+    "nazov": "schválená",
+    "popis": "schválená, čakajúca na voľný termín",
+    "icon": null,
+    "color": "cyan",
+    "created_at": "2020-02-23T17:05:33.000000Z",
+    "updated_at": "2020-03-27T11:21:06.000000Z"
+  },
+  {
+    "id": 3,
+    "nazov": "začatá/prebieha",
+    "popis": "práce prebiehajú",
+    "icon": null,
+    "color": "green",
+    "created_at": "2020-02-23T17:06:09.000000Z",
+    "updated_at": "2020-03-27T11:21:27.000000Z"
+  },
+  {
+    "id": 4,
+    "nazov": "ukončená",
+    "popis": "ukončené práce, čaká sa na odovzdanie",
+    "icon": null,
+    "color": "orange",
+    "created_at": "2020-02-23T17:07:15.000000Z",
+    "updated_at": "2020-03-27T11:20:37.000000Z"
+  },
+  {
+    "id": 5,
+    "nazov": "vyúčtovaná",
+    "popis": "zrátané práce, vyúčtovanie odovzdané klientovi",
+    "icon": null,
+    "color": "blue",
+    "created_at": "2020-02-23T17:07:52.000000Z",
+    "updated_at": "2020-03-27T11:21:35.000000Z"
+  },
+  {
+    "id": 6,
+    "nazov": "čiastočne uhradená",
+    "popis": "zaplatená záloha, príp. nejaké splátky",
+    "icon": null,
+    "color": null,
+    "created_at": "2020-02-23T17:08:23.000000Z",
+    "updated_at": "2020-02-23T17:08:23.000000Z"
+  },
+  {
+    "id": 7,
+    "nazov": "zaplatená",
+    "popis": "zákazka je uhradená",
+    "icon": null,
+    "color": null,
+    "created_at": "2020-02-23T17:09:24.000000Z",
+    "updated_at": "2020-02-23T17:09:24.000000Z"
+  },
+  {
+    "id": 8,
+    "nazov": "zrušená",
+    "popis": "zákazka bola zrušená z nejakých dôvodov",
+    "icon": null,
+    "color": null,
+    "created_at": "2020-02-23T17:09:50.000000Z",
+    "updated_at": "2020-02-23T17:09:50.000000Z"
+  }
+]

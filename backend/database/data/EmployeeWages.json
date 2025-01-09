@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "alias": "Maťo",
+    "platnost": "2020-01-01",
+    "sadzba": 8,
+    "employee_id": 1
+  },
+  {
+    "id": 2,
+    "alias": "Rasťo",
+    "platnost": "2020-01-01",
+    "sadzba": 8,
+    "employee_id": 2
+  },
+  {
+    "id": 3,
+    "alias": "Peter",
+    "platnost": "2020-01-01",
+    "sadzba": 4.5,
+    "employee_id": 3
+  },
+  {
+    "id": 4,
+    "alias": "Granko",
+    "platnost": "2020-01-01",
+    "sadzba": 4.5,
+    "employee_id": 4
+  },
+  {
+    "id": 5,
+    "alias": "Jakub",
+    "platnost": "2020-01-01",
+    "sadzba": 4.5,
+    "employee_id": 5
+  }
+]
