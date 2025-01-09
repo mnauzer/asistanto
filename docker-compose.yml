@@ -1,11 +1,11 @@
 services:
-  frontend:
+ frontend:
     image: frontend-image-name # Názov Docker image vášho frontendu
     build:
       context: ./frontend # Cesta k frontendovému projektu
       dockerfile: Dockerfile # Dockerfile pre frontend
     ports:
-      - "3000:3000" # Mapovanie hostiteľský-port:kontajnerový-port
+      - "3001:3000" # Mapovanie hostiteľský-port:kontajnerový-port
     volumes:
       - ./frontend:/app # Voliteľné: synchronizácia kódu medzi hostiteľom a kontajnerom
     environment:
@@ -13,7 +13,29 @@ services:
     depends_on:
       - backend # Voliteľné: závislosť na backendovej službe
 
-  backend:
+ frontend-vite:
+    image: node:16
+    build:
+      context: ./frontend-vite # Cesta k frontendovému projektu
+      dockerfile: Dockerfile # Dockerfile pre frontend
+    working_dir: /app
+    command:
+      - sh
+      - -c
+      - npm install && npm run dev
+    ports:
+      - "3002:3000"
+    volumes:
+      - ./frontend-vite:/app # Voliteľné: synchronizácia kódu medzi hostiteľom a kontajnerom
+    environment:
+      - VITE_SERVER_HOST=0.0.0.0 # Zabezpečí počúvanie na všetkých IP adresách
+    networks:
+      - frontend-network
+    depends_on:
+      - backend # Voliteľné: závislosť na backendovej službe
+
+
+ backend:
     image: backend-image-name
     build:
       context: ./backend
@@ -25,7 +47,7 @@ services:
     depends_on:
       - database
 
-  database:
+ database:
     image: postgres:14
     environment:
       POSTGRES_USER: user
@@ -33,3 +55,7 @@ services:
       POSTGRES_DB: dbname
     ports:
       - "5432:5432"
+
+networks:
+  frontend-network:
+    driver: bridge

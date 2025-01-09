@@ -1,22 +1,20 @@
-FROM node:18 AS build-stage
+# Použitie Node.js ako základného obrazu
+FROM node:16
 
 # Nastavenie pracovného adresára
 WORKDIR /app
 
-# Kopírovanie závislostí
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+# Kopírovanie balíkových konfigurácií
+COPY package*.json ./
 
 # Inštalácia závislostí
-RUN npm install --legacy-peer-deps
+RUN npm install
 
-# Kopírovanie aplikácie
+# Kopírovanie zdrojového kódu
 COPY . .
 
-# Build aplikácie
-RUN npm run build
+# Exponovanie portu
+EXPOSE 3001
 
-# Produkčné prostredie s Nginx
-FROM nginx:alpine AS production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Spustenie vývojového servera s počúvaním na všetkých IP adresách
+CMD ["npm", "run", "dev", "--", "--host"]
