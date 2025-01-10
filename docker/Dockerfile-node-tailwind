@@ -1,0 +1,19 @@
+FROM node:18
+
+# Nastavíme pracovný priečinok v kontajneri
+WORKDIR /app
+
+# Skopírujeme package*.json (alebo yarn.lock) do pracovného priečinka
+COPY ./frontend-tailwind/package*.json ./
+
+# Nainštalujeme závislosti
+RUN npm install
+
+# Skopírujeme zvyšok kódu
+COPY ./frontend-tailwind/ ./
+
+# Exponujeme port 3000
+EXPOSE 3000
+
+# Spustíme dev server
+CMD ["npm", "run", "dev"]

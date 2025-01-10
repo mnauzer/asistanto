@@ -1,0 +1,95 @@
+Štruktúra a vzťahy databáz:
+
+Základné delenie aplikácie
+
+Databázy: ()
+
+   Osoby:
+    - Zamestnanci (zoznam zamestnancov)
+         polia databázy:
+         * číslo
+         * meno
+         * priezvisko
+         * nick (jedinečný textový identifikátor, human readable)
+         * zaradenie (vedúcko, zamestnanec, brigádnik, externý)
+         * is_active
+         * adresa (Miesto)
+         + zamestntnanci_sadzby (pomocná tabuľka s hodinovými sadzbami)
+    - Dodávatelia (dodávatelia tovarov, materiálu a služieb)
+         polia databázy:
+         * číslo
+         * názov
+         * nick (jedinečný textový identifikátor, human readable)
+         * ico
+         * dic
+         * is_active
+         * adresa (Miesto)
+    - Klienti (zákazníci, môžu byť súkromné osoby a firmy)
+         polia databázy:
+         * číslo
+         * firma/súkromá osoba
+         * nick (jedinečný textový identifikátor, human readable)
+         * titul
+         * meno
+         * priezvisko
+         * názov firmy
+         * ico
+         * dic
+         * is_plátca dph
+         * is_active
+         * adresa (Miesto)
+    - Partneri (všetci ostatní, ktorí nespadajú do prvých troch skupín)
+         polia databázy:
+         * číslo
+         * firma/súkromá osoba
+         * nick (jedinečný textový identifikátor, human readable)
+         * titul
+         * meno
+         * priezvisko
+         * názov firmy
+         * ico
+         * dic
+         * is_plátca dph
+         * is_active
+         * adresa (Miesto)
+
+    Veci:
+    - Sklad (materiály,tovary s nákupnými a predajnými cenami a tieš s evidenciu aktuálneho stavu )
+    - Cenník prác ( aktuálne ceny )
+    - Stroje (stroje používané pri našej činnost, vlastné aj externé)
+    - Vozidlá (vozidlá používané pri našej činnost - len vlastné)
+    - Miesta (konkrétne miesta s GPS súradnícami a adresou, ktoré budú použité pri ďalších záznamoch. Napr. miesto realizácie, miesto dodávateľa a pod. Tieto záznamy budú
+    použité aj pre evidenciu dopravy a výpočet prejazdených km )
+    - Účty ( zoznam bankových a hotovstných účtov)
+
+    Evidencia:
+    - Dochádzka (evidencia dochádzky zamestnancov - príchod, odchod, počet odpracovaných hodín)
+    - Evidencia prác (evidencia prác vykonaných na zákazkách - začiatok, koniec, zamestnanci, vykonané práce, počet hodín, počasie. V podstate niečo ako stavebný denník)
+    - Evidencia materiálu (evidencia použiteho materiálu na zákazkách, názov, množstvo, cena)
+    - Evidencia strojov (evidencia strojov použitých na zákazkách)
+    - Evidencia dopravy (evidencia použitia vozidiel v rámci firmy ako aj na zákazkách)
+         polia databázy:
+         * dátum
+         * vozidlo (Vozidlá)
+         * šofér (Zamestnaci)
+         * trasa (Miesta, alebo pomocná tabuľka s miestami)
+
+    - Pokladňa (evidencia peňazí, príjmov a výdavkov)
+         polia databázy:
+         * dátum
+         * typ (príjem/výdaj/priebežná položka)
+         * platiteľ (Zamestnaci, Klienti, Partneri, Dodávatelia)
+         * príjemca
+         * kategória (mzdy, nákup materiálu, prevádzková réžia, a pod.)
+         * účel (text)
+         * suma bez dph
+         * sadzba dph
+         * dph
+         * suma s dph
+         * poznámka
+
+    Projekty:
+    - Cenové ponuky (zoznam cenových ponúk)
+    - Zákazky (Zoznam zákazok - akceptované cenové ponuky)
+    - Vyúčtovania (Zoznam vyúčtovaní - dokončené a odovzdané zákazky)
+

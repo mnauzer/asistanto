@@ -1,61 +1,85 @@
 services:
- frontend:
-    image: frontend-image-name # Názov Docker image vášho frontendu
-    build:
-      context: ./frontend # Cesta k frontendovému projektu
-      dockerfile: Dockerfile # Dockerfile pre frontend
-    ports:
-      - "3001:3000" # Mapovanie hostiteľský-port:kontajnerový-port
-    volumes:
-      - ./frontend:/app # Voliteľné: synchronizácia kódu medzi hostiteľom a kontajnerom
+  db:
+    image: postgres:15
+    container_name: asistanto-db
     environment:
-      - NODE_ENV=development # Prostredie aplikácie (napr. development, production)
-    depends_on:
-      - backend # Voliteľné: závislosť na backendovej službe
+      POSTGRES_DB: asistanto_db
+      POSTGRES_USER: asistanto_user
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - asistanto-network
 
- frontend-vite:
-    image: node:16
+  php-fpm:
     build:
-      context: ./frontend-vite # Cesta k frontendovému projektu
-      dockerfile: Dockerfile # Dockerfile pre frontend
-    working_dir: /app
-    command:
-      - sh
-      - -c
-      - npm install && npm run dev
+      context: .
+      dockerfile: ./docker/Dockerfile-php-fpm
+    container_name: asistanto-php-fpm
+    volumes:
+      - ./backend:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - asistanto-network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-nginx
+    container_name: asistanto-nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - php-fpm
+    networks:
+      - asistanto-network
+
+  frontend-tailwind:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-node-tailwind
+    container_name: asistanto-tailwind
+    volumes:
+      - ./frontend-tailwind:/app
+    ports:
+      - "3001:3000"
+    depends_on:
+      - php-fpm
+    networks:
+      - asistanto-network
+
+  frontend-bootstrap:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-node-bootstrap
+    container_name: asistanto-bootstrap
+    volumes:
+      - ./frontend-bootstrap:/app
     ports:
       - "3002:3000"
-    volumes:
-      - ./frontend-vite:/app # Voliteľné: synchronizácia kódu medzi hostiteľom a kontajnerom
-    environment:
-      - VITE_SERVER_HOST=0.0.0.0 # Zabezpečí počúvanie na všetkých IP adresách
+    depends_on:
+      - php-fpm
     networks:
-      - frontend-network
-    depends_on:
-      - backend # Voliteľné: závislosť na backendovej službe
+      - asistanto-network
 
-
- backend:
-    image: backend-image-name
+  frontend-admin:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./docker/Dockerfile-node-admin
+    container_name: asistanto-admin
+    volumes:
+      - ./frontend-admin:/app
     ports:
-      - "8000:8000"
-    environment:
-      - DATABASE_URL=postgres://user:password@database:5432/dbname
+      - "3003:3000"
     depends_on:
-      - database
-
- database:
-    image: postgres:14
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: dbname
-    ports:
-      - "5432:5432"
+      - php-fpm
+    networks:
+      - asistanto-network
 
 networks:
-  frontend-network:
+  asistanto-network:
     driver: bridge
+
+volumes:
+  db_data:
