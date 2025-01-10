@@ -1,17 +1,14 @@
-import './assets/main.css'
+import { createApp } from 'vue';
+import App from './App.vue';
+import axiosInstance from './axiosConfig'; // Importuj konfiguráciu Axiosu
+import router from './router'; // Ak používaš Vue Router
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import axiosInstance from "./axiosConfig";
-import App from './App.vue'
-import router from './router'
+const app = createApp(App);
 
-const app = createApp(App)
-
-// Nastavenie Axios ako globálnu inštanciu
+// Nastav Axios ako globálnu vlastnosť
 app.config.globalProperties.$axios = axiosInstance;
 
-app.use(createPinia())
-app.use(router)
+// Použi router, ak ho máš
+app.use(router);
 
-app.mount('#app')
+app.mount('#app');
