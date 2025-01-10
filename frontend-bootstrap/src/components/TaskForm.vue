@@ -1,115 +1,106 @@
 <template>
-  <div>
-    <h1>Tasks</h1>
-    <form @submit.prevent="submitTask">
-      <input v-model="title" placeholder="Title" />
-      <textarea v-model="description" placeholder="Description"></textarea>
-      <button type="submit">Add Task</button>
+  <div class="task-form">
+    <h2 class="task-form-title">Pridať novú úlohu</h2>
+    <form @submit.prevent="submitTask" class="task-form-container">
+      <input
+        v-model="title"
+        placeholder="Názov úlohy"
+        class="task-form-input"
+      />
+      <textarea
+        v-model="description"
+        placeholder="Popis úlohy"
+        class="task-form-textarea"
+      ></textarea>
+      <button type="submit" class="task-form-button">Pridať</button>
     </form>
-
-    <ul>
-      <li v-for="task in tasks" :key="task.id">{{ task.title }} - {{ task.description }}</li>
-    </ul>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   data() {
     return {
       title: "",
       description: "",
-      tasks: []
     };
-  },
-  async mounted() {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/tasks`);
-    this.tasks = response.data;
   },
   methods: {
     async submitTask() {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/tasks`, {
-        title: this.title,
-        description: this.description
-      });
-      this.tasks.push(response.data);
-      this.title = "";
-      this.description = "";
-    }
-  }
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/tasks`,
+          {
+            title: this.title,
+            description: this.description,
+          }
+        );
+        console.log(response.data);
+        this.title = "";
+        this.description = "";
+      } catch (error) {
+        console.error("Chyba pri pridávaní úlohy:", error);
+      }
+    },
+  },
 };
 </script>
+
 <style scoped>
-.item {
-  margin-top: 2rem;
+.task-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-form-title {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.task-form-container {
   display: flex;
-  position: relative;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.details {
-  flex: 1;
-  margin-left: 1rem;
+.task-form-input,
+.task-form-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
 }
 
-i {
-  display: flex;
-  place-items: center;
-  place-content: center;
-  width: 32px;
-  height: 32px;
-  color: var(--color-text);
+.task-form-input:focus,
+.task-form-textarea:focus {
+  outline: none;
+  border-color: #007bff;
 }
 
-h3 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-bottom: 0.4rem;
-  color: var(--color-heading);
+.task-form-textarea {
+  resize: none;
+  height: 80px;
 }
 
-@media (min-width: 1024px) {
-  .item {
-    margin-top: 0;
-    padding: 0.4rem 0 1rem calc(var(--section-gap) / 2);
-  }
+.task-form-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-  i {
-    top: calc(50% - 25px);
-    left: -26px;
-    position: absolute;
-    border: 1px solid var(--color-border);
-    background: var(--color-background);
-    border-radius: 8px;
-    width: 50px;
-    height: 50px;
-  }
-
-  .item:before {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    bottom: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:after {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    top: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:first-of-type:before {
-    display: none;
-  }
-
-  .item:last-of-type:after {
-    display: none;
-  }
+.task-form-button:hover {
+  background-color: #0056b3;
 }
 </style>

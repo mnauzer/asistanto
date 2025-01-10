@@ -1,15 +1,23 @@
-<script setup>
-import { RouterView } from 'vue-router'
-import TaskForm from './components/TaskForm.vue';
+<template>
+  <div>
+    <!-- Form for creating a new employee -->
+    <EmployeeForm />
 
+    <!-- Form for editing an existing employee -->
+    <EmployeeForm :employeeId="1" />
+  </div>
+</template>
+
+<script>
+import EmployeeForm from "./components/EmployeeForm.vue";
+
+export default {
+  components: {
+    EmployeeForm,
+  },
+};
 </script>
 
-<template>
-    <div class="wrapper">
-    </div>
- <TaskForm />
-  <RouterView />
-</template>
 
 <style scoped>
 header {
