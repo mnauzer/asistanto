@@ -8,11 +8,14 @@ RUN apt-get update && apt-get install -y \
 # Nainštalujeme Composer
 COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 
-# Nastav vlastníka na www-data (alebo php)
-# RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Skopíruj Laravel projekt
+COPY . /var/www/html
 
+# Vytvor potrebné priečinky a nastav vlastníka
 # Nastav oprávnenia
-# RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 WORKDIR /var/www/html
 EXPOSE 9000

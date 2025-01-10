@@ -6,10 +6,13 @@ services:
       POSTGRES_DB: asistanto_db
       POSTGRES_USER: asistanto_user
       POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
       - asistanto-network
+    restart: unless-stopped
 
   php-fpm:
     build:
@@ -22,6 +25,7 @@ services:
       - db
     networks:
       - asistanto-network
+    restart: unless-stopped
 
   nginx:
     build:
@@ -34,6 +38,7 @@ services:
       - php-fpm
     networks:
       - asistanto-network
+    restart: unless-stopped
 
   frontend-tailwind:
     build:
@@ -48,6 +53,7 @@ services:
       - php-fpm
     networks:
       - asistanto-network
+    restart: unless-stopped
 
   frontend-bootstrap:
     build:
@@ -62,6 +68,7 @@ services:
       - php-fpm
     networks:
       - asistanto-network
+    restart: unless-stopped
 
   frontend-admin:
     build:
@@ -76,6 +83,7 @@ services:
       - php-fpm
     networks:
       - asistanto-network
+    restart: unless-stopped
 
 networks:
   asistanto-network:
