@@ -45,13 +45,13 @@ services:
       - asistanto-network
     restart: unless-stopped
 
-  frontend-tailwind:
+  frontend-customer:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile-node-tailwind
-    container_name: asistanto-tailwind
+      dockerfile: ./docker/Dockerfile-node-customer
+    container_name: asistanto-customer
     volumes:
-      - ./frontend-tailwind:/app
+      - ./frontend-customer:/app
     ports:
       - "3001:3001"  # zmeň na rovnaký port
     environment:
@@ -65,13 +65,13 @@ services:
 
 # Podobne pre ostatné frontendy
 
-  frontend-bootstrap:
+  frontend-employee:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile-node-bootstrap
-    container_name: asistanto-bootstrap
+      dockerfile: ./docker/Dockerfile-node-employee
+    container_name: asistanto-employee
     volumes:
-      - ./frontend-bootstrap:/app
+      - ./frontend-employee:/app
     ports:
       - "3002:3002"
     environment:

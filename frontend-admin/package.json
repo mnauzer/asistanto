@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0 --port 3000",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "dev": "vite",
+    "build": "vite build",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",

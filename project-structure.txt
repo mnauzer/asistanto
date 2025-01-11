@@ -166,8 +166,8 @@
 ├── docker
 │   ├── Dockerfile-nginx
 │   ├── Dockerfile-node-admin
-│   ├── Dockerfile-node-bootstrap
-│   ├── Dockerfile-node-tailwind
+│   ├── Dockerfile-node-customer
+│   ├── Dockerfile-node-employee
 │   ├── Dockerfile-php-fpm
 │   ├── nginx
 │   │   └── conf.d
@@ -218,7 +218,25 @@
 │   ├── tsconfig.json
 │   ├── tsconfig.node.json
 │   └── vite.config.ts
-├── frontend-bootstrap
+├── frontend-customer
+│   ├── .gitignore
+│   ├── .vscode
+│   │   └── extensions.json
+│   ├── README.md
+│   ├── index.html
+│   ├── package.json
+│   ├── public
+│   │   └── vite.svg
+│   ├── src
+│   │   ├── App.vue
+│   │   ├── assets
+│   │   │   └── vue.svg
+│   │   ├── components
+│   │   │   └── HelloWorld.vue
+│   │   ├── main.js
+│   │   └── style.css
+│   └── vite.config.js
+├── frontend-employee
 │   ├── .editorconfig
 │   ├── .env
 │   ├── .gitignore
@@ -261,25 +279,8 @@
 │   │       ├── AboutView.vue
 │   │       └── HomeView.vue
 │   └── vite.config.js
-├── frontend-tailwind
-│   ├── .gitignore
-│   ├── .vscode
-│   │   └── extensions.json
-│   ├── README.md
-│   ├── index.html
-│   ├── package.json
-│   ├── public
-│   │   └── vite.svg
-│   ├── src
-│   │   ├── App.vue
-│   │   ├── assets
-│   │   │   └── vue.svg
-│   │   ├── components
-│   │   │   └── HelloWorld.vue
-│   │   ├── main.js
-│   │   └── style.css
-│   └── vite.config.js
 ├── project-structure.txt
+├── rename-frontends.sh
 └── Štruktúra a vzťahy databáz.txt
 
-75 directories, 207 files
+75 directories, 208 files
