@@ -36,28 +36,20 @@ COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 # Nastavenie pracovného adresára
 WORKDIR /var/www/html
 
-# Nastavenie oprávnení pre www-data
-RUN chown -R www-data:www-data /var/www/html
-
-# Prepnutie na www-data user
-USER ${USER}
-
-# Vytvorenie Laravel projektu
+# Vytvorenie Laravel projektu ako root
 RUN composer create-project laravel/laravel .
-
-# Nastavenie oprávnení pre storage a cache
-RUN mkdir -p \
-    storage/framework/cache/data \
-    storage/framework/sessions \
-    storage/framework/views \
-    storage/logs \
-    bootstrap/cache \
-    && chmod -R 775 \
-        storage \
-        bootstrap/cache
 
 # Kopírovanie .env súboru
 COPY ./backend/.env.example ./.env
+
+# Nastavenie oprávnení pre www-data
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod 755 /var/www/html \
+    && chmod 644 .env \
+    && chmod -R 775 storage bootstrap/cache
+
+# Prepnutie na www-data user
+USER ${USER}
 
 # Inštalácia závislostí a optimalizácia
 RUN composer install --optimize-autoloader --no-dev

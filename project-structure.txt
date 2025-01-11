@@ -1,0 +1,285 @@
+.
+├── README.md
+├── backend
+│   ├── .editorconfig
+│   ├── .env
+│   ├── .env.example
+│   ├── .env.testing
+│   ├── .gitattributes
+│   ├── .gitignore
+│   ├── .phpunit.result.cache
+│   ├── README.md
+│   ├── app
+│   │   ├── Console
+│   │   │   └── Kernel.php
+│   │   ├── Exceptions
+│   │   │   └── Handler.php
+│   │   ├── Http
+│   │   │   ├── Controllers
+│   │   │   │   ├── AttendanceController.php
+│   │   │   │   ├── Auth
+│   │   │   │   │   ├── AuthenticatedSessionController.php
+│   │   │   │   │   ├── EmailVerificationNotificationController.php
+│   │   │   │   │   ├── NewPasswordController.php
+│   │   │   │   │   ├── PasswordResetLinkController.php
+│   │   │   │   │   ├── RegisteredUserController.php
+│   │   │   │   │   └── VerifyEmailController.php
+│   │   │   │   ├── Controller.php
+│   │   │   │   ├── EmployeeController.php
+│   │   │   │   └── TaskController.php
+│   │   │   ├── Kernel.php
+│   │   │   ├── Middleware
+│   │   │   │   ├── Authenticate.php
+│   │   │   │   ├── Cors.php
+│   │   │   │   ├── EncryptCookies.php
+│   │   │   │   ├── EnsureEmailIsVerified.php
+│   │   │   │   ├── PreventRequestsDuringMaintenance.php
+│   │   │   │   ├── RedirectIfAuthenticated.php
+│   │   │   │   ├── TrimStrings.php
+│   │   │   │   ├── TrustHosts.php
+│   │   │   │   ├── TrustProxies.php
+│   │   │   │   ├── ValidateSignature.php
+│   │   │   │   └── VerifyCsrfToken.php
+│   │   │   └── Requests
+│   │   │       └── Auth
+│   │   │           └── LoginRequest.php
+│   │   ├── Models
+│   │   │   ├── Attendance.php
+│   │   │   ├── Employee.php
+│   │   │   ├── Task.php
+│   │   │   └── User.php
+│   │   └── Providers
+│   │       ├── AppServiceProvider.php
+│   │       ├── AuthServiceProvider.php
+│   │       ├── BroadcastServiceProvider.php
+│   │       ├── EventServiceProvider.php
+│   │       └── RouteServiceProvider.php
+│   ├── artisan
+│   ├── bootstrap
+│   │   ├── app.php
+│   │   └── cache
+│   │       ├── .gitignore
+│   │       ├── packages.php
+│   │       └── services.php
+│   ├── composer.json
+│   ├── composer.lock
+│   ├── config
+│   │   ├── app.php
+│   │   ├── auth.php
+│   │   ├── broadcasting.php
+│   │   ├── cache.php
+│   │   ├── cors.php
+│   │   ├── database.php
+│   │   ├── filesystems.php
+│   │   ├── hashing.php
+│   │   ├── logging.php
+│   │   ├── mail.php
+│   │   ├── queue.php
+│   │   ├── sanctum.php
+│   │   ├── services.php
+│   │   ├── session.php
+│   │   └── view.php
+│   ├── database
+│   │   ├── .gitignore
+│   │   ├── factories
+│   │   │   ├── TaskFactory.php
+│   │   │   └── UserFactory.php
+│   │   ├── migrations
+│   │   │   ├── 2014_10_12_000000_create_users_table.php
+│   │   │   ├── 2014_10_12_100000_create_password_reset_tokens_table.php
+│   │   │   ├── 2019_08_19_000000_create_failed_jobs_table.php
+│   │   │   ├── 2019_12_14_000001_create_personal_access_tokens_table.php
+│   │   │   ├── 2025_01_10_110037_create_tasks_table.php
+│   │   │   ├── 2025_01_10_150022_create_employees_table.php
+│   │   │   └── 2025_01_10_150204_create_attendance_table.php
+│   │   └── seeders
+│   │       └── DatabaseSeeder.php
+│   ├── phpunit.xml
+│   ├── public
+│   │   ├── .htaccess
+│   │   ├── favicon.ico
+│   │   ├── index.php
+│   │   └── robots.txt
+│   ├── resources
+│   │   └── views
+│   │       └── .gitkeep
+│   ├── routes
+│   │   ├── api.php
+│   │   ├── auth.php
+│   │   ├── channels.php
+│   │   ├── console.php
+│   │   └── web.php
+│   ├── storage
+│   │   ├── app
+│   │   │   ├── .gitignore
+│   │   │   └── public
+│   │   │       └── .gitignore
+│   │   ├── framework
+│   │   │   ├── .gitignore
+│   │   │   ├── cache
+│   │   │   │   ├── .gitignore
+│   │   │   │   └── data
+│   │   │   │       ├── .gitignore
+│   │   │   │       ├── 0e
+│   │   │   │       │   └── 37
+│   │   │   │       │       └── 0e37d09c5c02d3adb3b0f9e69b82711df4349a3c
+│   │   │   │       ├── 24
+│   │   │   │       │   └── 2a
+│   │   │   │       │       └── 242a9c7eb9fef62705b4c972a02bbee861a62c82
+│   │   │   │       ├── d3
+│   │   │   │       │   └── db
+│   │   │   │       │       └── d3db85086ae28064cc2de9c04544d49438af73e5
+│   │   │   │       └── f4
+│   │   │   │           └── 77
+│   │   │   │               └── f47762cf669fbecff18b71f56a965af531f00d09
+│   │   │   ├── sessions
+│   │   │   │   ├── .gitignore
+│   │   │   │   ├── XaY4c3UKPuF2vuP3eO0XdV31LBzWjrhJkM7hHtA1
+│   │   │   │   ├── f8zwzZP1aZjyoTpqW4wGNMPPInn4QrlCTZWdg9U0
+│   │   │   │   ├── o3J4BJFgK5bxks6PaOtaRgZOfGiq5pB0nfL4RG1I
+│   │   │   │   └── oJcnAkE6R3599jScreOvQ3aXvbqKuifJefXXTX4I
+│   │   │   ├── testing
+│   │   │   │   └── .gitignore
+│   │   │   └── views
+│   │   │       ├── .gitignore
+│   │   │       ├── 132b834a0a58f1e712afb341f8622879.php
+│   │   │       ├── 275c7c02e2528e6029079c885e2d2418.php
+│   │   │       ├── 9065e79a479fcdb86f244f50aa1f572b.php
+│   │   │       └── dd310000961f2d208873a737c27d849a.php
+│   │   └── logs
+│   │       ├── .gitignore
+│   │       └── laravel.log
+│   └── tests
+│       ├── CreatesApplication.php
+│       ├── Feature
+│       │   ├── Auth
+│       │   │   ├── AuthenticationTest.php
+│       │   │   ├── EmailVerificationTest.php
+│       │   │   ├── PasswordResetTest.php
+│       │   │   └── RegistrationTest.php
+│       │   └── ExampleTest.php
+│       ├── TestCase.php
+│       └── Unit
+│           ├── ExampleTest.php
+│           └── TaskApiTest.php
+├── databázy.md
+├── docker
+│   ├── Dockerfile-nginx
+│   ├── Dockerfile-node-admin
+│   ├── Dockerfile-node-bootstrap
+│   ├── Dockerfile-node-tailwind
+│   ├── Dockerfile-php-fpm
+│   ├── nginx
+│   │   └── conf.d
+│   ├── nginx.conf
+│   └── php
+│       ├── opcache.ini
+│       └── php.ini
+├── docker-compose.yml
+├── frontend-admin
+│   ├── .editorconfig
+│   ├── .gitignore
+│   ├── .prettierrc.json
+│   ├── .vscode
+│   │   ├── extensions.json
+│   │   └── settings.json
+│   ├── README.md
+│   ├── env.d.ts
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package.json
+│   ├── public
+│   │   └── favicon.ico
+│   ├── src
+│   │   ├── App.vue
+│   │   ├── assets
+│   │   │   ├── base.css
+│   │   │   ├── logo.svg
+│   │   │   └── main.css
+│   │   ├── components
+│   │   │   ├── HelloWorld.vue
+│   │   │   ├── TheWelcome.vue
+│   │   │   ├── WelcomeItem.vue
+│   │   │   └── icons
+│   │   │       ├── IconCommunity.vue
+│   │   │       ├── IconDocumentation.vue
+│   │   │       ├── IconEcosystem.vue
+│   │   │       ├── IconSupport.vue
+│   │   │       └── IconTooling.vue
+│   │   ├── main.ts
+│   │   ├── router
+│   │   │   └── index.ts
+│   │   ├── stores
+│   │   │   └── counter.ts
+│   │   └── views
+│   │       ├── AboutView.vue
+│   │       └── HomeView.vue
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   └── vite.config.ts
+├── frontend-bootstrap
+│   ├── .editorconfig
+│   ├── .env
+│   ├── .gitignore
+│   ├── .prettierrc.json
+│   ├── .vscode
+│   │   ├── extensions.json
+│   │   └── settings.json
+│   ├── README.md
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── jsconfig.json
+│   ├── package.json
+│   ├── public
+│   │   └── favicon.ico
+│   ├── src
+│   │   ├── App.vue
+│   │   ├── assets
+│   │   │   ├── base.css
+│   │   │   ├── logo.svg
+│   │   │   └── main.css
+│   │   ├── axiosConfig.js
+│   │   ├── components
+│   │   │   ├── EmployeeForm.vue
+│   │   │   ├── HelloWorld.vue
+│   │   │   ├── TaskForm.vue
+│   │   │   ├── TheWelcome.vue
+│   │   │   ├── WelcomeItem.vue
+│   │   │   └── icons
+│   │   │       ├── IconCommunity.vue
+│   │   │       ├── IconDocumentation.vue
+│   │   │       ├── IconEcosystem.vue
+│   │   │       ├── IconSupport.vue
+│   │   │       └── IconTooling.vue
+│   │   ├── main.js
+│   │   ├── router
+│   │   │   └── index.js
+│   │   ├── stores
+│   │   │   └── counter.js
+│   │   └── views
+│   │       ├── AboutView.vue
+│   │       └── HomeView.vue
+│   └── vite.config.js
+├── frontend-tailwind
+│   ├── .gitignore
+│   ├── .vscode
+│   │   └── extensions.json
+│   ├── README.md
+│   ├── index.html
+│   ├── package.json
+│   ├── public
+│   │   └── vite.svg
+│   ├── src
+│   │   ├── App.vue
+│   │   ├── assets
+│   │   │   └── vue.svg
+│   │   ├── components
+│   │   │   └── HelloWorld.vue
+│   │   ├── main.js
+│   │   └── style.css
+│   └── vite.config.js
+├── project-structure.txt
+└── Štruktúra a vzťahy databáz.txt
+
+75 directories, 207 files
