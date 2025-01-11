@@ -6,10 +6,11 @@ services:
       POSTGRES_DB: asistanto_db
       POSTGRES_USER: asistanto_user
       POSTGRES_PASSWORD: secret
+      TZ: "Europe/Bratislava"
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - asistanto-network
     restart: unless-stopped
@@ -21,8 +22,11 @@ services:
     container_name: asistanto-php-fpm
     volumes:
       - ./backend:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./docker/php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini:ro
     environment:
       PHP_IDE_CONFIG: "serverName=Docker"
+      TZ: "Europe/Bratislava"
     depends_on:
       - db
     networks:
@@ -37,8 +41,8 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./backend:/var/www/html
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./backend:/var/www/html:ro
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - php-fpm
     networks:
@@ -52,9 +56,11 @@ services:
     container_name: asistanto-customer
     volumes:
       - ./frontend-customer:/app
+      - /app/node_modules
     ports:
-      - "3001:3001"  # zmeň na rovnaký port
+      - "3001:3001"
     environment:
+      - NODE_ENV=development
       - VITE_HOST=0.0.0.0
       - VITE_PORT=3001
     depends_on:
@@ -63,8 +69,6 @@ services:
       - asistanto-network
     restart: unless-stopped
 
-# Podobne pre ostatné frontendy
-
   frontend-employee:
     build:
       context: .
@@ -72,9 +76,11 @@ services:
     container_name: asistanto-employee
     volumes:
       - ./frontend-employee:/app
+      - /app/node_modules
     ports:
       - "3002:3002"
     environment:
+      - NODE_ENV=development
       - VITE_HOST=0.0.0.0
       - VITE_PORT=3002
     depends_on:
@@ -90,9 +96,11 @@ services:
     container_name: asistanto-admin
     volumes:
       - ./frontend-admin:/app
+      - /app/node_modules
     ports:
       - "3003:3003"
     environment:
+      - NODE_ENV=development
       - VITE_HOST=0.0.0.0
       - VITE_PORT=3003
     depends_on:
@@ -106,4 +114,5 @@ networks:
     driver: bridge
 
 volumes:
-  db_data:
+  postgres_data:
+    driver: local
