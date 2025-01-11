@@ -1,0 +1,40 @@
+FROM node:20-alpine
+
+# Build arguments
+ARG FRONTEND_DIR
+ARG PORT
+
+WORKDIR /app
+
+# Add necessary build tools
+RUN apk add --no-cache python3 make g++ git wget
+
+# Debug info
+RUN node --version && npm --version
+
+# Copy package files from specific frontend
+COPY ./${FRONTEND_DIR}/package*.json ./
+
+# Clear npm cache and verify packages
+RUN npm cache clean --force && \
+    npm cache verify
+
+# Install dependencies with verbose logging
+RUN npm install --verbose
+
+# Copy source files from specific frontend
+COPY ./${FRONTEND_DIR}/ ./
+
+# Add healthcheck
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/ || exit 1
+
+# Expose the port passed as build argument
+EXPOSE ${PORT}
+
+# Set host and port for development server
+ENV VITE_HOST=0.0.0.0
+ENV VITE_PORT=${PORT}
+
+# Development server with host binding
+CMD ["sh", "-c", "npm run dev -- --host 0.0.0.0 --port $VITE_PORT"]

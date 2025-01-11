@@ -1,23 +1,24 @@
-<template>
-  <div>
-    <!-- Form for creating a new employee -->
-    <EmployeeForm />
-
-    <!-- Form for editing an existing employee -->
-    <EmployeeForm :employeeId="1" />
-  </div>
-</template>
-
-<script>
-import EmployeeForm from "./components/EmployeeForm.vue";
-
-export default {
-  components: {
-    EmployeeForm,
-  },
-};
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
 </script>
 
+<template>
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
+</template>
 
 <style scoped>
 header {
