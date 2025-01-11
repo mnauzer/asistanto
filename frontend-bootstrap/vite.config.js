@@ -16,11 +16,13 @@ export default defineConfig({
     },
   },
   server: {
+    host: '0.0.0.0',
+    port: 3002, // toto je dôležité, keďže v Dockeri mapuješ na port 3002
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'http://asistanto-nginx:80', // použijeme názov nginx kontajnera v sieti
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false
       },
     },
   },

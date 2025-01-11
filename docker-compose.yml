@@ -21,6 +21,8 @@ services:
     container_name: asistanto-php-fpm
     volumes:
       - ./backend:/var/www/html
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker"
     depends_on:
       - db
     networks:
@@ -34,6 +36,9 @@ services:
     container_name: asistanto-nginx
     ports:
       - "8080:80"
+    volumes:
+      - ./backend:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - php-fpm
     networks:
@@ -48,12 +53,17 @@ services:
     volumes:
       - ./frontend-tailwind:/app
     ports:
-      - "3001:3000"
+      - "3001:3001"  # zmeň na rovnaký port
+    environment:
+      - VITE_HOST=0.0.0.0
+      - VITE_PORT=3001
     depends_on:
       - php-fpm
     networks:
       - asistanto-network
     restart: unless-stopped
+
+# Podobne pre ostatné frontendy
 
   frontend-bootstrap:
     build:
@@ -63,7 +73,10 @@ services:
     volumes:
       - ./frontend-bootstrap:/app
     ports:
-      - "3002:3000"
+      - "3002:3002"
+    environment:
+      - VITE_HOST=0.0.0.0
+      - VITE_PORT=3002
     depends_on:
       - php-fpm
     networks:
@@ -78,7 +91,10 @@ services:
     volumes:
       - ./frontend-admin:/app
     ports:
-      - "3003:3000"
+      - "3003:3003"
+    environment:
+      - VITE_HOST=0.0.0.0
+      - VITE_PORT=3003
     depends_on:
       - php-fpm
     networks:

@@ -17,16 +17,10 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-// Employees routes
-Route::apiResource('employees', EmployeeController::class);
+Route::middleware('api')->group(function () {
+    Route::get('/test', function () {
+        return response()->json(['message' => 'API is working']);
+    });
 
-// Attendance routes
-Route::apiResource('attendance', AttendanceController::class);
-
-// Tasks routes (existing functionality)
-Route::apiResource('tasks', TaskController::class);
-
-// Test route for API (optional, for debugging purposes)
-Route::get('/test', function () {
-    return response()->json(['message' => 'API is working!']);
+    // Ďalšie API routes budú tu
 });
