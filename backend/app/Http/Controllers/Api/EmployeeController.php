@@ -4,47 +4,40 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use App\Http\Resources\EmployeeResource;
+use App\Http\Requests\EmployeeRequest;
 use Illuminate\Http\Request;
+
 
 class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function index(Request $request)
     {
-        //
+        $query = Employee::with('person')->whereHas('person', function($q) {
+            $q->where('type', 'employee');
+        });
+
+        if ($request->has('position')) {
+            $query->where('position', $request->position);
+        }
+
+        $employees = $query->paginate(15);
+
+        return EmployeeResource::collection($employees);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
-        //
+        $personData = $request->validated()['person'];
+        $personData['type'] = 'employee';
+
+        $person = Person::create($personData);
+
+        $employee = $person->employee()->create($request->validated()['employee']);
+
+        return new EmployeeResource($employee);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Employee $employee)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Employee $employee)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Employee $employee)
-    {
-        //
-    }
+    // Ďalšie CRUD metódy...
 }

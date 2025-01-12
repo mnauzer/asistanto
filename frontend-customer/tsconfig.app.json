@@ -1,6 +1,9 @@
 {
-  "extends": "./tsconfig.web.json",
+  "extends": ["@vue/tsconfig/tsconfig.web.json"],
   "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
@@ -13,7 +16,14 @@
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "types": ["node"]
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "src/**/__tests__/*"
+  ]
 }

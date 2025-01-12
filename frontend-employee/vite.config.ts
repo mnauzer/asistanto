@@ -17,4 +17,18 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+<<<<<<< HEAD
+=======
+  server: {
+    host: '0.0.0.0',
+    port: 3002,
+    proxy: {
+      '/api': {
+        target: 'http://asistanto-nginx:80',
+        changeOrigin: true,
+        secure: false
+      },
+    },
+  }
+>>>>>>> 984bbfa1953aeda682a3c18ba9e7fdf0eb78c22c
 })

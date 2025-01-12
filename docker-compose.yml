@@ -33,7 +33,7 @@ services:
     environment:
       PHP_IDE_CONFIG: "serverName=Docker"
       TZ: "Europe/Bratislava"
-    user: "1000:1000" # UID:GID používateľa laravel
+    user: "1000:1000"  # Explicitne nastavenie UID:GID
     depends_on:
       db:
         condition: service_healthy
