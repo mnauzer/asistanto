@@ -23,10 +23,19 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u 1000 -d /home/laravel laravel
-RUN mkdir -p /home/laravel/.composer && \
-    chown -R laravel:laravel /home/laravel
+# Create laravel group and user with specific IDs
+RUN groupadd -g 1003 laravel && \
+    useradd -u 1003 -g laravel -m -s /bin/bash laravel
 
-# Switch to non-root user
+# Create Laravel storage structure
+RUN mkdir -p storage/logs \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/framework/cache \
+    bootstrap/cache
+
+# Set correct ownership and permissions
+RUN chown -R laravel:laravel /var/www/html \
+    && chmod -R 775 storage bootstrap/cache
+
 USER laravel
