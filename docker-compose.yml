@@ -25,15 +25,18 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile-php-fpm
+      args:
+        USER_ID: ${USER_ID:-1000}
+        GROUP_ID: ${GROUP_ID:-1000}
     container_name: asistanto-php-fpm
     volumes:
-      - ./backend:/var/www/html
+      - ./backend:/var/www/html:cached
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini:ro
       - ./docker/php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini:ro
     environment:
       PHP_IDE_CONFIG: "serverName=Docker"
       TZ: "Europe/Bratislava"
-    user: "1000:1000"  # Explicitne nastavenie UID:GID
+    user: "root:root"  # Temporarily start as root to fix permissions
     depends_on:
       db:
         condition: service_healthy
@@ -78,7 +81,7 @@ services:
         PORT: 3001
     container_name: asistanto-customer
     volumes:
-      - ./frontend-customer:/app
+      - ./frontend-customer:/app:delegated
       - /app/node_modules
     ports:
       - "3001:3001"
@@ -109,7 +112,7 @@ services:
         PORT: 3002
     container_name: asistanto-employee
     volumes:
-      - ./frontend-employee:/app
+      - ./frontend-employee:/app:delegated
       - /app/node_modules
     ports:
       - "3002:3002"
@@ -140,7 +143,7 @@ services:
         PORT: 3003
     container_name: asistanto-admin
     volumes:
-      - ./frontend-admin:/app
+      - ./frontend-admin:/app:delegated
       - /app/node_modules
     ports:
       - "3003:3003"

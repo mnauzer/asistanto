@@ -9,33 +9,57 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    libpq-dev
-
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+    libpq-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install -j$(nproc) \
+    pdo_pgsql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory
-WORKDIR /var/www/html
+WORKDIR /var/www
 
-# Create laravel group and user with specific IDs
-RUN groupadd -g 1003 laravel && \
-    useradd -u 1003 -g laravel -m -s /bin/bash laravel
+# Create non-root user with same UID/GID as host user
+RUN groupadd -f -g ${GROUP_ID} laravel && \
+    id -u laravel >/dev/null 2>&1 || useradd -u ${USER_ID} -g laravel -m -s /bin/bash laravel
 
-# Create Laravel storage structure
-RUN mkdir -p storage/logs \
-    storage/framework/sessions \
-    storage/framework/views \
-    storage/framework/cache \
-    bootstrap/cache
+# Create Laravel storage structure with correct permissions
+RUN mkdir -p /var/www/html \
+    /var/www/html/storage/framework/sessions \
+    /var/www/html/storage/framework/views \
+    /var/www/html/storage/framework/cache/data \
+    /var/www/html/storage/logs \
+    /var/www/html/bootstrap/cache
 
-# Set correct ownership and permissions
-RUN chown -R laravel:laravel /var/www/html \
-    && chmod -R 775 storage bootstrap/cache
+# Set correct permissions
+RUN chown -R ${USER_ID}:${GROUP_ID} /var/www && \
+    chmod -R 755 /var/www && \
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chmod -R g+w /var/www/html/storage /var/www/html/bootstrap/cache
 
-USER laravel
+# Create a script to fix permissions on container start
+COPY <<EOF /usr/local/bin/fix-permissions.sh
+#!/bin/sh
+chown -R ${USER_ID}:${GROUP_ID} /var/www
+chmod -R 755 /var/www
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+chmod -R g+w /var/www/html/storage /var/www/html/bootstrap/cache
+EOF
+
+RUN chmod +x /usr/local/bin/fix-permissions.sh
+
+# Switch to non-root user
+USER ${USER_ID}:${GROUP_ID}
+
+EXPOSE 9000
+
+CMD ["/bin/sh", "-c", "fix-permissions.sh && php-fpm"]
